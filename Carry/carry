@@ -1,0 +1,66 @@
+#!/bin/bash
+# Jose Aguilar
+# Pop V2
+# Pick up files and directories and take them with you
+
+carry() {
+        DATA=~/.carry/log
+        # Drop files
+        if [ $1 == "-d" ]; then
+                while read line; do
+                        if mv "$line" "$PWD"
+                        then
+                                echo "$line dropped here"
+                                rm $DATA
+                        else
+                                echo "Nothing to drop"
+                        fi
+                done <$DATA
+        # Copy files
+        elif [ $1 == "-c" ]; then
+                while read line; do
+                        if cp "$line" "$PWD"
+                        then
+                                echo "$line copied here"
+                                rm $DATA
+                        else
+                                echo "Nothing to copy"
+                        fi
+                done <$DATA
+        # List carried data
+        elif [ $1 == "-l" ]; then
+                if cat $DATA
+                then
+                        continue
+                else
+                        echo "Not carrying anything right now"
+                fi
+        # Clear list
+        elif [ $1 == "-cl" ]; then
+                if cat $DATA
+                then
+                        echo -n "Clear list? [y/n] "
+                        read YESNO
+                        case $YESNO in
+                                y|Y) rm $DATA
+                                     echo "List cleared"
+                                     echo "Not carrying anything right now" ;;
+                                n|N) echo "Nothing cleared" ;;
+                                *)   echo "Nothing cleared" ;;
+                        esac
+                else
+                        echo "Not carrying anything right now"
+                        echo "Nothing to clear"
+                fi
+        # List attributes
+        elif [ -z $1 ]; then
+                echo "Attributes"
+                cat ~/.carry/atb
+        # Pick up files
+        else
+                echo "$PWD/$1" >> ~/.carry/log
+                echo "Picked up $1"
+        fi
+
+} 2> /dev/null
+

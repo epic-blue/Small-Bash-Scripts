@@ -1,0 +1,5 @@
+carry FILENAME | Pick up file
+carry -l ..... | List files currently carried
+carry -cl .... | Clear files carried (Doesn't affect actual files)
+carry -d ..... | Drop files in PWD
+carry -c ..... | Copy files to PWD
