@@ -1,0 +1,58 @@
+#!/bin/bash
+# Jose Aguilar
+# More efficient mv
+
+pop() {
+        LOC=$(head -1 ~/.pop/data)
+        FILE=$(tail -1 ~/.pop/data)
+
+        # Set the directory to which files will be moved to
+        if [ $1 == "-s" ]; then
+                echo $PWD > ~/.pop/data
+                echo "Directory set"
+        # If pop file exists
+        elif [ -e ~/.pop/data ]; then
+                # CD to set directory
+                if [ $1 == "-m" ]; then
+                        cd $LOC
+                        echo "Moved you to $LOC"
+                # Bring back the last file sent
+                elif [ $1 == "-b" ]; then
+                        if mv "$LOC$FILE" "./"
+                        then
+                                echo "Brougth back $FILE"
+                        else
+                                echo "Unable to do it"
+                        fi
+                # Clear pop history
+                elif [ $1 == "-c" ]; then
+                        rm ~/.pop/data
+                        echo "History cleared"
+                # Show pop history
+                elif [ $1 == "-h" ]; then
+                        echo "Pop history"
+                        cat ~/.pop/data
+                # Let user know what attributes to use
+                elif [ -z $1 ]; then
+                        echo "Attributes"
+                        cat ~/.pop/atb
+                # Move file to set directory
+                else
+                        if mv "$1" "$LOC"
+                        then
+                                echo "Moved $FILE to $LOC"
+                                echo "/$1" >> ~/.pop/data
+                        else
+                                echo "File not found"
+                        fi
+                fi
+        # If the user is trying use a command without setting a directory first
+        elif [ $1 ]; then
+                echo "Please set the directory first"
+                echo "Use pop -s to set the directory to $PWD"
+        # Let user know what attributes to use
+        elif [ -z $1 ]; then
+                echo "Attributes"
+                cat ~/.pop/atb
+        fi
+} 2> /dev/null

@@ -1,0 +1,18 @@
+#!/bin/bash
+# Jose Aguilar
+# installer
+
+echo "Install pop? (Y/N) "
+read YESNO
+if [ $YESNO == "Y" ]; then
+	echo "Moving files..."
+	mkdir ~/.pop
+	mv pop ~/.pop
+	mv atb ~/.pop
+	echo "Appending to .bash_profile..."
+	echo 'source ~/.pop/pop' >> ~/.bash_profile
+	echo "Done!"
+	echo "Restart terminal for changes to take effect"
+else
+	echo "Nothing happening"
+fi

@@ -1,0 +1,7 @@
+pop -s ..... | Set directory
+pop -b ..... | Bring back file
+pop -h ..... | Show history
+pop -c ..... | Clear history
+pop -m ..... | CD to set directory
+pop ........ | Show this document
+pop FILENAME | MV file to set directory
